@@ -6,14 +6,6 @@ public class EnemyMovement : MonoBehaviour
 {
     [SerializeField] private float m_movementSpeed;
 
-    private Transform m_playerTransform;
-
-    void Start()
-    {
-        // TODO: Replace with a get from some game-manager.
-        m_playerTransform = FindObjectOfType<PlayerMovement>().transform;
-    }
-
     void Update()
     {
         Move();
@@ -21,7 +13,7 @@ public class EnemyMovement : MonoBehaviour
 
     void Move()
     {
-        var direction = (m_playerTransform.position - transform.position).normalized;
+        var direction = (GameManager.Instance.Player.transform.position - transform.position).normalized;
         transform.position += direction * m_movementSpeed * Time.deltaTime;
     }
 }

@@ -1,4 +1,5 @@
 using System;
+using System.Reflection;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,6 +20,7 @@ public class FireSystem : MonoBehaviour
         public Func<Vector3, Vector3> GetTargetPosition;
     }
 
+    [System.Serializable]
     public class FireChain
     {
         public FireRequest OriginalFireRequest; // Unmodified fire request, set upon main weapon change.
@@ -30,26 +32,30 @@ public class FireSystem : MonoBehaviour
         public List<Func<FireRequest, FireRequest>> FireModifiers = new List<Func<FireRequest, FireRequest>>();
     }
 
-    public FireRequest TestRequest;
-    private List<FireChain> m_fireChains = new List<FireChain>();
+    public List<FireChain> FireChains = new List<FireChain>();
 
     private void Start()
     {
         // Temp.
-        TestRequest.GetTargetPosition = TargetMethods.ClosestEnemy;
-
-        var testFireChain = new FireChain();
-        testFireChain.OriginalFireRequest = TestRequest;
-        testFireChain.FireModifiers.Add(FireModifiers.DamageIncrase);
-        testFireChain.FireModifiers.Add(FireModifiers.CooldownReduction);
-        testFireChain.FireModifiers.Add(FireModifiers.CooldownReduction);
-        testFireChain.FireModifiers.Add(FireModifiers.CooldownReduction);
-        m_fireChains.Add(testFireChain);
+        //var testFireChain = FireChains[0];
+        //testFireChain.FireModifiers.Add(FireModifiers.DamageIncrase);
+        //testFireChain.FireModifiers.Add(FireModifiers.LightProjectile);
+        //testFireChain.FireModifiers.Add(FireModifiers.LightProjectile);
+        //testFireChain.FireModifiers.Add(FireModifiers.CooldownReduction);
+        //testFireChain.FireModifiers.Add(FireModifiers.CooldownReduction);
+        //testFireChain.FireModifiers.Add(FireModifiers.CooldownReduction);
+        //testFireChain.FireModifiers.Add(FireModifiers.CooldownReduction);
+        //testFireChain.FireModifiers.Add(FireModifiers.CooldownReduction);
+        //testFireChain.FireModifiers.Add(FireModifiers.CooldownReduction);
+        //testFireChain.FireModifiers.Add(FireModifiers.CooldownReduction);
+        //testFireChain.FireModifiers.Add(FireModifiers.CooldownReduction);
+        //testFireChain.FireModifiers.Add(FireModifiers.CooldownReduction);
+        //testFireChain.FireModifiers.Add(FireModifiers.CooldownReduction);
     }
 
     void Update()
     {
-        foreach (var fireChain in m_fireChains)
+        foreach (var fireChain in FireChains)
         {
             if (TryFireChain(fireChain))
             {
@@ -105,11 +111,6 @@ public class FireSystem : MonoBehaviour
 
 public class FireModifiers
 {
-    public interface IFireModifier
-    {
-        FireSystem.FireRequest ProcessFireRequest(FireSystem.FireRequest fireRequest);
-    }
-
     public static FireSystem.FireRequest DamageIncrase(FireSystem.FireRequest fireRequest)
     {
         fireRequest.Damage *= 2;
@@ -118,7 +119,7 @@ public class FireModifiers
 
     public static FireSystem.FireRequest SizeIncrease(FireSystem.FireRequest fireRequest)
     {
-        fireRequest.Size *= 2;
+        fireRequest.Size *= 1.3f;
         return fireRequest;
     }
 
@@ -132,6 +133,27 @@ public class FireModifiers
     {
         fireRequest.Speed *= 0.7f;
         fireRequest.Damage *= 1.3f;
+        return fireRequest;
+    }
+
+    public static FireSystem.FireRequest LightProjectile(FireSystem.FireRequest fireRequest)
+    {
+        fireRequest.Speed *= 1.3f;
+        fireRequest.Damage *= 0.7f;
+        return fireRequest;
+    }
+
+    public static FireSystem.FireRequest ShortRangeCooldownReduction(FireSystem.FireRequest fireRequest)
+    {
+        var playerPosition = GameManager.Instance.Player.transform.position;
+        var targetPosition = fireRequest.GetTargetPosition(playerPosition);
+        fireRequest.Cooldown *= Mathf.Lerp(0.15f, 1.0f, Vector3.Distance(playerPosition, targetPosition) / 15.0f);
+        return fireRequest;
+    }
+
+    public static FireSystem.FireRequest DamagePerSize(FireSystem.FireRequest fireRequest)
+    {
+        fireRequest.Damage *= Mathf.Lerp(1.0f, 2.0f, fireRequest.Size / 2.0f);
         return fireRequest;
     }
 }
@@ -152,7 +174,10 @@ public class TargetMethods
             {
                 var dist = Vector2.Distance(point, collider.transform.position);
                 if (dist <= closestDist)
+                {
+                    closestDist = dist;
                     closestEnemy = collider.transform.position;
+                }
             }
         }
 
