@@ -13,4 +13,6 @@ MonoBehaviour:
   m_Name: CooldownReduction_Modifier
   m_EditorClassIdentifier: 
   DisplayName: Cooldown Reduction
+  DisplayDescription: 
+  Icon: {fileID: 2800000, guid: fa31384ac05c69345abda9f59d0da614, type: 3}
   ModifierMethodName: CooldownReduction

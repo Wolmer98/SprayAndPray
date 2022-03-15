@@ -16,6 +16,7 @@ public class FireSystem : MonoBehaviour
         public float Cooldown; // This wil be transfered back to the fireChain after being modified by the FireModifiers.
         public float Size;
         public float Speed;
+        public int PierceTimes;
 
         public Func<Vector3, Vector3> GetTargetPosition;
     }
@@ -102,10 +103,13 @@ public class FireSystem : MonoBehaviour
         // Instantiate and set stats.
         var projectile = Instantiate(fireRequest.ProjectilePrefab, fireRequest.SpawnPosition, spawnRotation);
         projectile.Damage = fireRequest.Damage;
+        projectile.PierceTimes = fireRequest.PierceTimes;
+        
         projectile.transform.localScale = Vector3.one * fireRequest.Size;
 
         var projectileMovement = projectile.GetComponent<ProjectileMovement>();
         projectileMovement.MovementSpeed *= fireRequest.Speed;
+
     }
 }
 
@@ -154,6 +158,12 @@ public class FireModifiers
     public static FireSystem.FireRequest DamagePerSize(FireSystem.FireRequest fireRequest)
     {
         fireRequest.Damage *= Mathf.Lerp(1.0f, 2.0f, fireRequest.Size / 2.0f);
+        return fireRequest;
+    }
+
+    public static FireSystem.FireRequest PiercingProjectile(FireSystem.FireRequest fireRequest)
+    {
+        fireRequest.PierceTimes++;
         return fireRequest;
     }
 }

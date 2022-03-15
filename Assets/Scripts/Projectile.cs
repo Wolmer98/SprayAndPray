@@ -6,6 +6,9 @@ public class Projectile : MonoBehaviour
 {
     public float Damage;
     public float LifeTime = 3.0f;
+    public int PierceTimes = 0;
+
+    private int m_pierceCounter = 0;
 
     private void Start()
     {
@@ -23,6 +26,8 @@ public class Projectile : MonoBehaviour
             }
         }
 
-        Destroy(gameObject);
+        m_pierceCounter++;
+        if(m_pierceCounter > PierceTimes)
+            Destroy(gameObject);
     }
 }

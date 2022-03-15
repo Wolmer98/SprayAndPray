@@ -17,4 +17,34 @@ public class GameManager : MonoBehaviour
     }
 
     public GameObject Player;
+    public Inventory Inventory;
+    public WeaponItem StartWeapon;
+
+    private void Start()
+    {
+        Inventory.Init();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            Inventory.gameObject.SetActive(!Inventory.gameObject.activeSelf);
+
+            if (Inventory.gameObject.activeSelf)
+                PauseGame();
+            else
+                UnpauseGame();
+        }
+    }
+
+    private void PauseGame()
+    {
+        Time.timeScale = 0;
+    }
+
+    private void UnpauseGame()
+    {
+        Time.timeScale = 1;
+    }
 }

@@ -6,4 +6,5 @@ public class Item : ScriptableObject
 {
     public string DisplayName;
     public string DisplayDescription;
+    public Texture2D Icon;
 }

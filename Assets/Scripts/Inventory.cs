@@ -2,6 +2,7 @@ using System.Reflection;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Inventory : MonoBehaviour
 {
@@ -18,27 +19,29 @@ public class Inventory : MonoBehaviour
     }
 
     [SerializeField] private Transform m_unequippedParent;
-    [SerializeField] private GameObject m_itemCellPrefab;
+    [SerializeField] private Transform m_fireChainsParent;
+
+    [SerializeField] private ItemCell m_itemCellPrefab;
+    [SerializeField] private FireChainElement m_fireChainPrefab;
+    [SerializeField] private FireChainSlot m_fireChainSlotPrefab;
+
+    [SerializeField] private int m_fireChainAmount;
+    [SerializeField] private int m_fireChainLength;
 
     public List<Item> m_items = new List<Item>();
-    private List<List<Item>> m_fireChains = new List<List<Item>>();
+    public List<Item[]> m_fireChains = new List<Item[]>();
 
-    void Start()
+    public void Init()
     {
-        // Temp.
-        var testFireChain = new List<Item>();
-        foreach (var item in m_items)
+        for (int i = 0; i < m_fireChainAmount; i++)
         {
-            testFireChain.Add(item);
+            m_fireChains.Add(new Item[m_fireChainLength]);
         }
-        m_fireChains.Add(testFireChain);
 
-        BuildFireChains();
-    }
+        m_fireChains[0][0] = GameManager.Instance.StartWeapon;
 
-    void Update()
-    {
-        
+        RebuildUI();
+        BuildFireSystemChains();
     }
 
     public void AddItem(Item item)
@@ -48,15 +51,52 @@ public class Inventory : MonoBehaviour
 
     private void OnEnable()
     {
-        
+        RebuildUI();
     }
 
-    private void OnDisable()
+    public void RebuildUI()
     {
-        
+        BuildInventoryUI();
+        BuildFireChainUI();
     }
 
-    private void BuildFireChains()
+    private void BuildInventoryUI()
+    {
+        Utility.DestroyAllChildren(m_unequippedParent);
+
+        foreach (var item in m_items)
+        {
+            var itemCell = Instantiate(m_itemCellPrefab, m_unequippedParent);
+            itemCell.Setup(item);
+        }
+    }
+
+    private void BuildFireChainUI()
+    {
+        Utility.DestroyAllChildren(m_fireChainsParent);
+
+        int fireChainIndex = 0;
+        foreach (var fireChain in m_fireChains)
+        {
+            var fireChainElement = Instantiate(m_fireChainPrefab, m_fireChainsParent);
+            fireChainElement.FireChainIndex = fireChainIndex;
+
+            for (int i = 0; i < m_fireChainLength; i++)
+            {
+                var fireChainSlot = Instantiate(m_fireChainSlotPrefab, fireChainElement.transform.GetChild(1)); // eww
+                fireChainSlot.FireChainSlotIndex = i;
+                if (fireChain[i] != null)
+                {
+                    var itemCell = Instantiate(m_itemCellPrefab, fireChainSlot.transform);
+                    itemCell.Setup(fireChain[i]);
+                }
+            }
+
+            fireChainIndex++;
+        }
+    }
+
+    public void BuildFireSystemChains()
     {
         var fireSystem = GameManager.Instance.Player.GetComponent<FireSystem>();
         fireSystem.FireChains.Clear();
@@ -69,7 +109,7 @@ public class Inventory : MonoBehaviour
             var fireChain = m_fireChains[i];
             var fireSystemChain = new FireSystem.FireChain();
 
-            for (int j = 0; j < fireChain.Count; j++)
+            for (int j = 0; j < fireChain.Length; j++)
             {
                 var item = fireChain[j];
                 

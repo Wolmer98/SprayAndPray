@@ -13,6 +13,9 @@ public class EnemyMovement : MonoBehaviour
 
     void Move()
     {
+        if (GameManager.Instance.Player == null)
+            return;
+
         var direction = (GameManager.Instance.Player.transform.position - transform.position).normalized;
         transform.position += direction * m_movementSpeed * Time.deltaTime;
     }

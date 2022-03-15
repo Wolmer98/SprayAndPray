@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ef4acbe499ca48047baee1f2a891fe8a, type: 3}
-  m_Name: SizeIncrease_Modifier
+  m_Name: PiercingProjectiles_Modifier
   m_EditorClassIdentifier: 
-  DisplayName: Size Increase
+  DisplayName: Piercing Projectiles
   DisplayDescription: 
-  Icon: {fileID: 2800000, guid: f4c0aca6992e71b43a5bc1e472039cf8, type: 3}
-  ModifierMethodName: SizeIncrease
+  Icon: {fileID: 2800000, guid: 2b58ebc86f7e53e47bd97c9f503e97b8, type: 3}
+  ModifierMethodName: PiercingProjectile

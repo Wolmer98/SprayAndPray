@@ -93,10 +93,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 891495075060661546}
+  - component: {fileID: 3295967920052429387}
   - component: {fileID: 2150011970869390957}
   - component: {fileID: 4965850300207043899}
   - component: {fileID: 2305398321515013582}
   - component: {fileID: 9052327870677216528}
+  - component: {fileID: 4792085985858343608}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -120,6 +122,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3295967920052429387
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1596972998885331801}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba700430ac6ee0d4ea06dc0abdad8a57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &2150011970869390957
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -192,21 +206,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3113746718c802488248f28f90e4162, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_fireChains:
-  - OriginalFireRequest:
-      ProjectilePrefab: {fileID: 8114851285233331668, guid: 007c68bc6b85f9b428e070765824b1c1, type: 3}
-      SpawnPosition: {x: 0, y: 0, z: 0}
-      Damage: 1
-      Cooldown: 1
-      Size: 1
-      Speed: 1
-    CurrentCooldown: 0
-    OriginalCooldown: 0.5
-    TimeAtLastFire: 0
-    CurrentFireRequest:
-      ProjectilePrefab: {fileID: 0}
-      SpawnPosition: {x: 0, y: 0, z: 0}
-      Damage: 0
-      Cooldown: 0
-      Size: 0
-      Speed: 0
+  FireChains: []
+--- !u!114 &4792085985858343608
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1596972998885331801}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 961271ca58a1813479df27c570496aee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_maxHealth: 0

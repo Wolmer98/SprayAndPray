@@ -81,6 +81,9 @@ public class EnemyManager : MonoBehaviour
 
     private void SpawnRandomEnemy()
     {
+        if (GameManager.Instance.Player == null)
+            return;
+
         var enemyPrefab = GetRandomEnemyPrefab();
         var playerOffset = Random.insideUnitCircle.normalized * m_spawnDistance;
         var spawnPosition = GameManager.Instance.Player.transform.position.AddVec2(playerOffset);

@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: Standard_Weapon
   m_EditorClassIdentifier: 
   DisplayName: Standard Weapon
+  DisplayDescription: 
+  Icon: {fileID: 2800000, guid: 13e0fc7ca8e17e949a2f4a73fc04f11d, type: 3}
   FireChain:
     OriginalFireRequest:
       ProjectilePrefab: {fileID: 8114851285233331668, guid: 007c68bc6b85f9b428e070765824b1c1, type: 3}
