@@ -25,7 +25,7 @@ public class Inventory : MonoBehaviour
     [SerializeField] private FireChainElement m_fireChainPrefab;
     [SerializeField] private FireChainSlot m_fireChainSlotPrefab;
 
-    [SerializeField] private int m_fireChainAmount;
+    [SerializeField] private int m_fireChainStartAmount;
     [SerializeField] private int m_fireChainLength;
 
     public List<Item> m_items = new List<Item>();
@@ -33,9 +33,9 @@ public class Inventory : MonoBehaviour
 
     public void Init()
     {
-        for (int i = 0; i < m_fireChainAmount; i++)
+        for (int i = 0; i < m_fireChainStartAmount; i++)
         {
-            m_fireChains.Add(new Item[m_fireChainLength]);
+            CreateNewFireChain();
         }
 
         m_fireChains[0][0] = GameManager.Instance.StartWeapon;
@@ -44,9 +44,25 @@ public class Inventory : MonoBehaviour
         BuildFireSystemChains();
     }
 
+    public void CreateNewFireChain()
+    {
+        m_fireChains.Add(new Item[m_fireChainLength]);
+        BuildFireChainUI();
+    }
+
     public void AddItem(Item item)
     {
         m_items.Add(item);
+    }
+
+    public FireChainSlot.FireChainSlotType GetSlotType(int chainIndex, int slotIndex)
+    {
+        if (chainIndex == -1 || slotIndex == -1)
+            return FireChainSlot.FireChainSlotType.Weapon;
+
+        var fireChain = m_fireChainsParent.GetChild(chainIndex);
+        var slot = fireChain.GetComponent<FireChainElement>().SlotContainer.GetChild(slotIndex);
+        return slot.GetComponentInChildren<FireChainSlot>().SlotType;
     }
 
     private void OnEnable()
@@ -60,7 +76,7 @@ public class Inventory : MonoBehaviour
         BuildFireChainUI();
     }
 
-    private void BuildInventoryUI()
+    public void BuildInventoryUI()
     {
         Utility.DestroyAllChildren(m_unequippedParent);
 
@@ -71,7 +87,7 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    private void BuildFireChainUI()
+    public void BuildFireChainUI()
     {
         Utility.DestroyAllChildren(m_fireChainsParent);
 
@@ -83,8 +99,10 @@ public class Inventory : MonoBehaviour
 
             for (int i = 0; i < m_fireChainLength; i++)
             {
-                var fireChainSlot = Instantiate(m_fireChainSlotPrefab, fireChainElement.transform.GetChild(1)); // eww
-                fireChainSlot.FireChainSlotIndex = i;
+                var fireChainSlot = Instantiate(m_fireChainSlotPrefab, fireChainElement.SlotContainer); // eww
+                fireChainSlot.SlotIndex = i;
+                fireChainSlot.SlotType = i == 0 ? FireChainSlot.FireChainSlotType.Weapon : FireChainSlot.FireChainSlotType.Modifier;
+
                 if (fireChain[i] != null)
                 {
                     var itemCell = Instantiate(m_itemCellPrefab, fireChainSlot.transform);

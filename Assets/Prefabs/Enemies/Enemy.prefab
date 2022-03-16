@@ -49,6 +49,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_maxHealth: 1
+  OnDie:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &5762459139893182277
 MonoBehaviour:
   m_ObjectHideFlags: 0

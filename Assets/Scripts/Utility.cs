@@ -17,3 +17,9 @@ public static class Utility
         }
     }
 }
+
+public static class Colors
+{
+    public static Color WeaponColor => new Color(0.8f, 0.3f, 0.1f);
+    public static Color ModifierColor => new Color(0.3f, 0.6f, 0.3f);
+}

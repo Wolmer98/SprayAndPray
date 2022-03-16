@@ -5,9 +5,10 @@ using UnityEngine.EventSystems;
 
 public class FireChainElement : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    public static int LastHoveredFireChainIndex;
+    public static int LastHoveredFireChainIndex = -1;
 
     public int FireChainIndex;
+    public Transform SlotContainer;
 
     public void OnPointerEnter(PointerEventData eventData)
     {

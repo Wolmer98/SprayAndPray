@@ -17,6 +17,7 @@ public class FireSystem : MonoBehaviour
         public float Size;
         public float Speed;
         public int PierceTimes;
+        public int ProjectilesOnDestroy;
 
         public Func<Vector3, Vector3> GetTargetPosition;
     }
@@ -34,25 +35,6 @@ public class FireSystem : MonoBehaviour
     }
 
     public List<FireChain> FireChains = new List<FireChain>();
-
-    private void Start()
-    {
-        // Temp.
-        //var testFireChain = FireChains[0];
-        //testFireChain.FireModifiers.Add(FireModifiers.DamageIncrase);
-        //testFireChain.FireModifiers.Add(FireModifiers.LightProjectile);
-        //testFireChain.FireModifiers.Add(FireModifiers.LightProjectile);
-        //testFireChain.FireModifiers.Add(FireModifiers.CooldownReduction);
-        //testFireChain.FireModifiers.Add(FireModifiers.CooldownReduction);
-        //testFireChain.FireModifiers.Add(FireModifiers.CooldownReduction);
-        //testFireChain.FireModifiers.Add(FireModifiers.CooldownReduction);
-        //testFireChain.FireModifiers.Add(FireModifiers.CooldownReduction);
-        //testFireChain.FireModifiers.Add(FireModifiers.CooldownReduction);
-        //testFireChain.FireModifiers.Add(FireModifiers.CooldownReduction);
-        //testFireChain.FireModifiers.Add(FireModifiers.CooldownReduction);
-        //testFireChain.FireModifiers.Add(FireModifiers.CooldownReduction);
-        //testFireChain.FireModifiers.Add(FireModifiers.CooldownReduction);
-    }
 
     void Update()
     {
@@ -104,6 +86,7 @@ public class FireSystem : MonoBehaviour
         var projectile = Instantiate(fireRequest.ProjectilePrefab, fireRequest.SpawnPosition, spawnRotation);
         projectile.Damage = fireRequest.Damage;
         projectile.PierceTimes = fireRequest.PierceTimes;
+        projectile.ProjectilesOnDestroy = fireRequest.ProjectilesOnDestroy;
         
         projectile.transform.localScale = Vector3.one * fireRequest.Size;
 
@@ -149,21 +132,30 @@ public class FireModifiers
 
     public static FireSystem.FireRequest ShortRangeCooldownReduction(FireSystem.FireRequest fireRequest)
     {
+        if (GameManager.Instance.Player == null || fireRequest.GetTargetPosition == null)
+            return fireRequest;
+
         var playerPosition = GameManager.Instance.Player.transform.position;
         var targetPosition = fireRequest.GetTargetPosition(playerPosition);
-        fireRequest.Cooldown *= Mathf.Lerp(0.15f, 1.0f, Vector3.Distance(playerPosition, targetPosition) / 15.0f);
+        fireRequest.Cooldown *= Mathf.Lerp(0.4f, 1.0f, Vector3.Distance(playerPosition, targetPosition) / 7.0f);
         return fireRequest;
     }
 
     public static FireSystem.FireRequest DamagePerSize(FireSystem.FireRequest fireRequest)
     {
-        fireRequest.Damage *= Mathf.Lerp(1.0f, 2.0f, fireRequest.Size / 2.0f);
+        fireRequest.Damage *= Mathf.Lerp(1.0f, 5.0f, (fireRequest.Size - 1) / 2.0f);
         return fireRequest;
     }
 
     public static FireSystem.FireRequest PiercingProjectile(FireSystem.FireRequest fireRequest)
     {
         fireRequest.PierceTimes++;
+        return fireRequest;
+    }
+
+    public static FireSystem.FireRequest ProjectilesOnDestroy(FireSystem.FireRequest fireRequest)
+    {
+        fireRequest.ProjectilesOnDestroy++;
         return fireRequest;
     }
 }

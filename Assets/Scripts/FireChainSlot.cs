@@ -6,16 +6,27 @@ using UnityEngine.EventSystems;
 
 public class FireChainSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    public static int LastHoveredFireChainSlotIndex;
-    public int FireChainSlotIndex;
+    public enum FireChainSlotType { Weapon, Modifier }
+
+    public static int LastHoveredSlotIndex = -1;
+    public int SlotIndex;
+
+    public FireChainSlotType SlotType;
+
+    [SerializeField] private Image m_backgroundImage;
+
+    private void Start()
+    {
+        m_backgroundImage.color = SlotType == FireChainSlotType.Weapon ? Colors.WeaponColor : Colors.ModifierColor;
+    }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        LastHoveredFireChainSlotIndex = FireChainSlotIndex;
+        LastHoveredSlotIndex = SlotIndex;
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        LastHoveredFireChainSlotIndex = -1;
+        LastHoveredSlotIndex = -1;
     }
 }

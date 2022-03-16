@@ -49,6 +49,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Damage: 1
   LifeTime: 3
+  PierceTimes: 0
+  ProjectilesOnDestroy: 0
 --- !u!114 &4759442753049862344
 MonoBehaviour:
   m_ObjectHideFlags: 0

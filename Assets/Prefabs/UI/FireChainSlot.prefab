@@ -279,7 +279,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96ab9288a0df45444ac71ab7a9afe8dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FireChainSlotIndex: 0
+  SlotIndex: 0
+  SlotType: 0
+  m_backgroundImage: {fileID: 7515021742926350940}
 --- !u!1 &5216369611894944378
 GameObject:
   m_ObjectHideFlags: 0

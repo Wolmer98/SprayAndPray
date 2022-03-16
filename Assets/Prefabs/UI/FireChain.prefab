@@ -115,6 +115,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   FireChainIndex: 0
+  SlotContainer: {fileID: 8381137699907427185}
 --- !u!1 &5947176106462402433
 GameObject:
   m_ObjectHideFlags: 0
