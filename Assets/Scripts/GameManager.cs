@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,9 +17,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public GameObject Player;
+    public Player Player;
     public Inventory Inventory;
     public WeaponItem StartWeapon;
+
+    [SerializeField] TMPro.TMP_Text m_timerText;
 
     private void Start()
     {
@@ -36,6 +39,10 @@ public class GameManager : MonoBehaviour
             else
                 UnpauseGame();
         }
+
+        int seconds = Mathf.FloorToInt(Time.timeSinceLevelLoad);
+        TimeSpan time = TimeSpan.FromSeconds(seconds);
+        m_timerText.text = time.ToString(@"m\:ss");
     }
 
     private void PauseGame()

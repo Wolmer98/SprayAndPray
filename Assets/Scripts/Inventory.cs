@@ -38,6 +38,7 @@ public class Inventory : MonoBehaviour
             CreateNewFireChain();
         }
 
+        AddItem(GameManager.Instance.StartWeapon);
         m_fireChains[0][0] = GameManager.Instance.StartWeapon;
 
         RebuildUI();

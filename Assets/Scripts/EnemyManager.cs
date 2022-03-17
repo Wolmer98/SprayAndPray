@@ -25,11 +25,13 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] private float m_maxTimeDifficultyScaling;
     [SerializeField] AnimationCurve m_waveAmount;
 
+    [SerializeField] AnimationCurve m_healthAmount;
+
     [SerializeField] GameObject[] m_enemyPrefabs;
 
     void Start()
     {
-        
+
     }
 
     void Update()
@@ -60,8 +62,7 @@ public class EnemyManager : MonoBehaviour
         var enemyPrefab = GetRandomEnemyPrefab();
         var waveOffset = Random.insideUnitCircle.normalized * m_spawnDistance;
 
-        var t = Mathf.Clamp01(Time.timeSinceLevelLoad / m_maxTimeDifficultyScaling);
-        int spawnAmount = (int)m_waveAmount.Evaluate(t);
+        int spawnAmount = (int)m_waveAmount.Evaluate(GetDifficultyT());
 
         for (int i = 0; i < spawnAmount; i++)
         {
@@ -72,6 +73,11 @@ public class EnemyManager : MonoBehaviour
 
             await System.Threading.Tasks.Task.Delay((int)(m_spawnCooldown * 10));
         }
+    }
+
+    private float GetDifficultyT()
+    {
+        return Mathf.Clamp01(Time.timeSinceLevelLoad / m_maxTimeDifficultyScaling);
     }
 
     private GameObject GetRandomEnemyPrefab()
@@ -96,6 +102,9 @@ public class EnemyManager : MonoBehaviour
         if (this == null)
             return;
 
-       Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
+        var enemy = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
+
+        float maxHealth = m_healthAmount.Evaluate(GetDifficultyT());
+        enemy.GetComponent<HealthComponent>().SetMaxHealth(maxHealth);
     }
 }

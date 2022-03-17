@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 76470059817298143}
   - component: {fileID: 4762438044731000137}
   - component: {fileID: 5762459139893182277}
+  - component: {fileID: 6320013417733791454}
   - component: {fileID: 1208267495201028531}
   - component: {fileID: 2928376046225959868}
   m_Layer: 7
@@ -49,6 +50,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_maxHealth: 1
+  m_xpDropPrefab: {fileID: 3456722303932941553, guid: f9b82aa8f0583af4493b9e4fa82ef9ee, type: 3}
+  OnTakeDamage:
+    m_PersistentCalls:
+      m_Calls: []
   OnDie:
     m_PersistentCalls:
       m_Calls: []
@@ -65,6 +70,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_movementSpeed: 3
+--- !u!114 &6320013417733791454
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 76470059817298136}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4229cb99474da614a8ea5a468f036b5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_spriteRenderer: {fileID: 8864882101823420887}
 --- !u!61 &1208267495201028531
 BoxCollider2D:
   m_ObjectHideFlags: 0

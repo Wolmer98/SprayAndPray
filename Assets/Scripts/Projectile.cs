@@ -13,7 +13,6 @@ public class Projectile : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log("DAMAGE: " + Damage);
         Destroy(gameObject, LifeTime);
     }
 
