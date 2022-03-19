@@ -17,7 +17,7 @@ MonoBehaviour:
   Icon: {fileID: 2800000, guid: d28c40237edfc4d4f8f62b0f071c42e0, type: 3}
   FireChain:
     OriginalFireRequest:
-      ProjectilePrefab: {fileID: 6173724201993001189, guid: 6e3777229f48ccd459688afc5abfad6c, type: 3}
+      ProjectilePrefab: {fileID: 6173724201993001189, guid: ea5a07b256da4e34fa550790b36bf9ad, type: 3}
       SpawnPosition: {x: 0, y: 0, z: 0}
       Damage: 3
       Cooldown: 1
