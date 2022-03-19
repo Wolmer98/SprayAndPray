@@ -18,8 +18,9 @@ public class GameManager : MonoBehaviour
     }
 
     public Player Player;
-    public Inventory Inventory;
     public WeaponItem StartWeapon;
+    public Inventory Inventory;
+    public HoverPopup HoverPopup;
 
     [SerializeField] TMPro.TMP_Text m_timerText;
 

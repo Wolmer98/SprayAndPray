@@ -1,0 +1,7 @@
+* Gör fiender som kontrar modifiers, t.ex. fiender som är immuna mot skada när de är nära (har en sköld), eller fiender som inte springer rakt mot spelaren
+
+* Gör fler vapen och modifiers. Andra projektiler som har annorlunda form, andra target metoder. Minor, explosioner, etc.
+
+* Korta ned firechainen vid start, gör så levlar kan ge slots, och när en chain är full med slots, börja på nästa chain.
+
+* Ljud och grafik :3

@@ -1,5 +1,6 @@
 using System.Reflection;
 using System.Collections;
+using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -27,15 +28,16 @@ public class Inventory : MonoBehaviour
 
     [SerializeField] private int m_fireChainStartAmount;
     [SerializeField] private int m_fireChainLength;
+    [SerializeField] private int m_maxFireChains;
 
     public List<Item> m_items = new List<Item>();
-    public List<Item[]> m_fireChains = new List<Item[]>();
+    public List<List<Item>> m_fireChains = new List<List<Item>>();
 
     public void Init()
     {
         for (int i = 0; i < m_fireChainStartAmount; i++)
         {
-            CreateNewFireChain();
+            AddFireChainSlot();
         }
 
         AddItem(GameManager.Instance.StartWeapon);
@@ -45,10 +47,25 @@ public class Inventory : MonoBehaviour
         BuildFireSystemChains();
     }
 
-    public void CreateNewFireChain()
+    public void AddFireChainSlot()
     {
-        m_fireChains.Add(new Item[m_fireChainLength]);
-        BuildFireChainUI();
+        if ((GetCurrentFireSlots() % m_fireChainLength) == 0)
+            m_fireChains.Add(new List<Item>());
+        
+        m_fireChains.Last().Add(null);
+    }
+
+    public bool MaximumFireslotsReached()
+    {
+        int fireSlots = GetCurrentFireSlots();
+        return fireSlots >= m_maxFireChains * m_fireChainLength;
+    }
+
+    private int GetCurrentFireSlots()
+    {
+        int fireSlotCount = 0;
+        m_fireChains.ForEach((fireChain) => fireSlotCount += fireChain.Count);
+        return fireSlotCount;
     }
 
     public void AddItem(Item item)
@@ -69,6 +86,11 @@ public class Inventory : MonoBehaviour
     private void OnEnable()
     {
         RebuildUI();
+    }
+
+    private void OnDisable()
+    {
+        GameManager.Instance?.HoverPopup?.HideHoverPopup();
     }
 
     public void RebuildUI()
@@ -100,6 +122,9 @@ public class Inventory : MonoBehaviour
 
             for (int i = 0; i < m_fireChainLength; i++)
             {
+                if (i >= fireChain.Count)
+                    break;
+
                 var fireChainSlot = Instantiate(m_fireChainSlotPrefab, fireChainElement.SlotContainer); // eww
                 fireChainSlot.SlotIndex = i;
                 fireChainSlot.SlotType = i == 0 ? FireChainSlot.FireChainSlotType.Weapon : FireChainSlot.FireChainSlotType.Modifier;
@@ -128,7 +153,7 @@ public class Inventory : MonoBehaviour
             var fireChain = m_fireChains[i];
             var fireSystemChain = new FireSystem.FireChain();
 
-            for (int j = 0; j < fireChain.Length; j++)
+            for (int j = 0; j < fireChain.Count; j++)
             {
                 var item = fireChain[j];
                 

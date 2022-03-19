@@ -160,7 +160,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.15686275, g: 0.3254902, b: 0.41960785, a: 0.9490196}
+  m_Color: {r: 0.3424, g: 0.3919513, b: 0.41960785, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -187,6 +187,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3298777104098896293}
   - component: {fileID: 1849861084720695260}
+  - component: {fileID: 2787033046898378664}
   m_Layer: 5
   m_Name: FireChains
   m_TagString: Untagged
@@ -240,6 +241,20 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &2787033046898378664
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3298777104098896292}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HorizontalFit: 0
+  m_VerticalFit: 1
 --- !u!1 &3298777104100716093
 GameObject:
   m_ObjectHideFlags: 0
@@ -297,6 +312,7 @@ MonoBehaviour:
   m_itemCellPrefab: {fileID: 8537425240084209415, guid: b6cf26172c1df4b42913a86935fad261, type: 3}
   m_fireChainPrefab: {fileID: 8244289175685275404, guid: 3f12780542523634c87bc35d9f2ae577, type: 3}
   m_fireChainSlotPrefab: {fileID: 3958163419711137049, guid: 1554b7d0c6fe414488753cb15d55fe9e, type: 3}
-  m_fireChainStartAmount: 1
-  m_fireChainLength: 7
+  m_fireChainStartAmount: 4
+  m_fireChainLength: 6
+  m_maxFireChains: 3
   m_items: []

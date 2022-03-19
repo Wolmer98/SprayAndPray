@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: LightProjectile_Modifier
   m_EditorClassIdentifier: 
   DisplayName: Light Projectile
-  DisplayDescription: 
+  DisplayDescription: Increase speed, reduce size
   Icon: {fileID: 2800000, guid: c87e8f515d280e34cb22e6e3ec263fb9, type: 3}
   ModifierMethodName: LightProjectile

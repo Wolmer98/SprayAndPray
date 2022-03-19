@@ -21,6 +21,7 @@ public class EnemyManager : MonoBehaviour
     private float m_spawnTimer;
     private float m_spawnWaveTimer;
 
+    [SerializeField] private Bounds m_spawnBounds;
     [SerializeField] private float m_spawnDistance;
     [SerializeField] private float m_maxTimeDifficultyScaling;
     [SerializeField] AnimationCurve m_waveAmount;
@@ -28,11 +29,6 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] AnimationCurve m_healthAmount;
 
     [SerializeField] GameObject[] m_enemyPrefabs;
-
-    void Start()
-    {
-
-    }
 
     void Update()
     {
@@ -101,10 +97,20 @@ public class EnemyManager : MonoBehaviour
         // Since we do async spawning, make sure this doesn't run in edit-mode
         if (this == null)
             return;
+        
+        spawnPosition = m_spawnBounds.ClosestPoint(spawnPosition);
+        if (Vector3.Distance(GameManager.Instance.Player.transform.position, spawnPosition) < 20.0f)
+            return;
 
         var enemy = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
 
         float maxHealth = m_healthAmount.Evaluate(GetDifficultyT());
         enemy.GetComponent<HealthComponent>().SetMaxHealth(maxHealth);
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = new Color(1.0f, 0.92f, 0.016f, 0.7f);
+        Gizmos.DrawCube(m_spawnBounds.center, m_spawnBounds.size);
     }
 }

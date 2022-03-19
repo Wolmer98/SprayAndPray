@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: HeavyProjectile_Modifier
   m_EditorClassIdentifier: 
   DisplayName: Heavy Projectile
-  DisplayDescription: 
+  DisplayDescription: Increase size, reduce speed
   Icon: {fileID: 2800000, guid: be4607d9761e4c8458713914113c48d7, type: 3}
   ModifierMethodName: HeavyProjectile

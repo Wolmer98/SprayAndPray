@@ -27,10 +27,10 @@ public class FireSystem : MonoBehaviour
     {
         public FireRequest OriginalFireRequest; // Unmodified fire request, set upon main weapon change.
 
-        public float CurrentCooldown;
+        [HideInInspector] public float CurrentCooldown;
         public float OriginalCooldown = 5.0f;
-        public float TimeAtLastFire;
-        public FireRequest CurrentFireRequest; // Fire request modified by FireModifiers, copied from OriginalFireRequest
+        [HideInInspector] public float TimeAtLastFire;
+        [HideInInspector] public FireRequest CurrentFireRequest; // Fire request modified by FireModifiers, copied from OriginalFireRequest
         public List<Func<FireRequest, FireRequest>> FireModifiers = new List<Func<FireRequest, FireRequest>>();
     }
 
@@ -84,9 +84,7 @@ public class FireSystem : MonoBehaviour
 
         // Instantiate and set stats.
         var projectile = Instantiate(fireRequest.ProjectilePrefab, fireRequest.SpawnPosition, spawnRotation);
-        projectile.Damage = fireRequest.Damage;
-        projectile.PierceTimes = fireRequest.PierceTimes;
-        projectile.ProjectilesOnDestroy = fireRequest.ProjectilesOnDestroy;
+        projectile.FireRequest = fireRequest;
         
         projectile.transform.localScale = Vector3.one * fireRequest.Size;
 

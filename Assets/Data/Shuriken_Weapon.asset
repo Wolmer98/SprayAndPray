@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8389283395ccfba4a811470329fd4526, type: 3}
-  m_Name: Standard_Weapon
+  m_Name: Shuriken_Weapon
   m_EditorClassIdentifier: 
-  DisplayName: Standard Weapon
-  DisplayDescription: 
+  DisplayName: Shuriken Weapon
+  DisplayDescription: Fires shurikens, targets nearest enemy
   Icon: {fileID: 2800000, guid: 13e0fc7ca8e17e949a2f4a73fc04f11d, type: 3}
   FireChain:
     OriginalFireRequest:
-      ProjectilePrefab: {fileID: 8114851285233331668, guid: 007c68bc6b85f9b428e070765824b1c1, type: 3}
+      ProjectilePrefab: {fileID: 6173724201993001189, guid: 655d84c8c4f544a4897595656ef74fb3, type: 3}
       SpawnPosition: {x: 0, y: 0, z: 0}
       Damage: 1
       Cooldown: 1

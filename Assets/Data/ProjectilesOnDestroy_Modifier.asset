@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: ProjectilesOnDestroy_Modifier
   m_EditorClassIdentifier: 
   DisplayName: Projectiles On Destroy
-  DisplayDescription: 
+  DisplayDescription: Spawns new projectiles when the primary projectile is destroyed
   Icon: {fileID: 2800000, guid: 6cb2cb04cf9a9d843ae41848b296bb28, type: 3}
   ModifierMethodName: ProjectilesOnDestroy

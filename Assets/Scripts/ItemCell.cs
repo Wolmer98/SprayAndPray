@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class ItemCell : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
+public class ItemCell : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler
 {
     public Item Item;
     [SerializeField] private Image m_image;
@@ -34,6 +34,8 @@ public class ItemCell : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        GameManager.Instance.HoverPopup.HideHoverPopup();
+
         if (IsHoveringFireChainSlot)
             Inventory.Instance.m_fireChains[FireChainElement.LastHoveredFireChainIndex][FireChainSlot.LastHoveredSlotIndex] = null;
         else
@@ -71,5 +73,15 @@ public class ItemCell : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
             case ModifierItem: m_image.color = Colors.ModifierColor; break;
             default: m_image.color = Color.white; break;
         }
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        GameManager.Instance.HoverPopup.ShowHoverPopup(Item.DisplayName, Item.DisplayDescription);
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        GameManager.Instance.HoverPopup.HideHoverPopup();
     }
 }

@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 1295180718236769908}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 4, y: 4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 891495075060661546}
@@ -73,12 +73,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.40334642, g: 0.6201082, b: 0.8301887, a: 1}
+  m_Sprite: {fileID: 963991048, guid: a33df244a96f4ec4394458f9fb4477f1, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.16, y: 0.24}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -95,10 +95,11 @@ GameObject:
   - component: {fileID: 891495075060661546}
   - component: {fileID: 3295967920052429387}
   - component: {fileID: 2150011970869390957}
-  - component: {fileID: 4965850300207043899}
+  - component: {fileID: 7777867654656853388}
   - component: {fileID: 2305398321515013582}
   - component: {fileID: 9052327870677216528}
   - component: {fileID: 4792085985858343608}
+  - component: {fileID: 283584381888721307}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -134,6 +135,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba700430ac6ee0d4ea06dc0abdad8a57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_fireChainSlotChance: 0.2
+  m_possibleLoot:
+  - {fileID: 11400000, guid: 156de62ca23e44d458d3d0e93457957a, type: 2}
+  - {fileID: 11400000, guid: 2006cd0dc537182438c5ab98ee147ad0, type: 2}
+  - {fileID: 11400000, guid: 508e478f8e553f944abad94a5c3eb3d9, type: 2}
+  - {fileID: 11400000, guid: 8ad482a4b87a15142b038b6e0be97f25, type: 2}
+  - {fileID: 11400000, guid: 6476a663cdfdeff49bd5a874a48d929f, type: 2}
+  - {fileID: 11400000, guid: b4340ad0441596044a285b87e170bf78, type: 2}
+  - {fileID: 11400000, guid: 06cdfe18a45b17a46924d15326a5e537, type: 2}
+  - {fileID: 11400000, guid: a126b038ba777b348bf0874772194ab8, type: 2}
+  - {fileID: 11400000, guid: 68758255362792e4da72aeea07df69b2, type: 2}
 --- !u!114 &2150011970869390957
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -146,9 +158,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d30e9440ea075914d8ea92d145cdee7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_movementSpeed: 8
---- !u!61 &4965850300207043899
-BoxCollider2D:
+  m_movementSpeed: 4
+--- !u!58 &7777867654656853388
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -161,18 +173,8 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
+  m_Radius: 0.5
 --- !u!50 &2305398321515013582
 Rigidbody2D:
   serializedVersion: 4
@@ -219,4 +221,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 961271ca58a1813479df27c570496aee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_maxHealth: 0
+  m_maxHealth: 3
+  m_xpDropPrefab: {fileID: 0}
+  OnTakeDamage:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDie:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!95 &283584381888721307
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1596972998885331801}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d3e54e1dbc5e3c84da8d6563d2fce51d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: SizeIncrease_Modifier
   m_EditorClassIdentifier: 
   DisplayName: Size Increase
-  DisplayDescription: 
+  DisplayDescription: Increase the size of projectiles
   Icon: {fileID: 2800000, guid: f4c0aca6992e71b43a5bc1e472039cf8, type: 3}
   ModifierMethodName: SizeIncrease

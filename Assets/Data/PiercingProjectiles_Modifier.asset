@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: PiercingProjectiles_Modifier
   m_EditorClassIdentifier: 
   DisplayName: Piercing Projectiles
-  DisplayDescription: 
+  DisplayDescription: Projectiles now pierce through enemies
   Icon: {fileID: 2800000, guid: 2b58ebc86f7e53e47bd97c9f503e97b8, type: 3}
   ModifierMethodName: PiercingProjectile

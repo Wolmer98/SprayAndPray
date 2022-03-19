@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
     private int m_level;
     private int m_xpRequired = 15;
 
+    [SerializeField] private float m_fireChainSlotChance = 0.25f;
     [SerializeField] private List<Item> m_possibleLoot = new List<Item>();
 
     private void Start()
@@ -27,26 +28,37 @@ public class Player : MonoBehaviour
 
     private void LevelUp()
     {
-        m_possibleLoot.Shuffle();
-        Item selectedItem = null;
-        foreach (var item in m_possibleLoot)
+        float rng = Random.Range(0.0f, 1.0f);
+
+        if (rng <= m_fireChainSlotChance && !GameManager.Instance.Inventory.MaximumFireslotsReached())
         {
-            if (GameManager.Instance.Inventory.m_items.Contains(item))
-                continue;
-            else
-            {
-                selectedItem = item;
-                break;
-            }
+            GameManager.Instance.Inventory.AddFireChainSlot();
+            FloatingTextManager.Instance.SpawnFloatingText("NEW FIRE SLOT [TAB]", transform.position, transform);
+            return;
         }
-
-        if (selectedItem != null)
+        else
         {
-            GameManager.Instance.Inventory.AddItem(selectedItem);
-            m_possibleLoot.Remove(selectedItem);
+            m_possibleLoot.Shuffle();
+            Item selectedItem = null;
+            foreach (var item in m_possibleLoot)
+            {
+                if (GameManager.Instance.Inventory.m_items.Contains(item))
+                    continue;
+                else
+                {
+                    selectedItem = item;
+                    break;
+                }
+            }
 
-            var messagePos = transform.position + (Vector3.up * 5);
-            FloatingTextManager.Instance.SpawnFloatingText("NEW ITEM [TAB]", transform.position, transform);
+            if (selectedItem != null)
+            {
+                GameManager.Instance.Inventory.AddItem(selectedItem);
+                m_possibleLoot.Remove(selectedItem);
+
+                FloatingTextManager.Instance.SpawnFloatingText("NEW ITEM [TAB]", transform.position, transform);
+                return;
+            }
         }
     }
 
