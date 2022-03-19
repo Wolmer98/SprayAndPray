@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef4acbe499ca48047baee1f2a891fe8a, type: 3}
+  m_Name: SizeIncrease_Modifier
+  m_EditorClassIdentifier: 
+  DisplayName: Size Increase
+  DisplayDescription: Increase the size of projectiles
+  Icon: {fileID: 2800000, guid: f4c0aca6992e71b43a5bc1e472039cf8, type: 3}
+  ModifierMethodName: SizeIncrease

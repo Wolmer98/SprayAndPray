@@ -9,6 +9,8 @@ public class Projectile : MonoBehaviour
     [SerializeField] private float m_lifeTime = 3.0f;
     private int m_pierceCounter = 0;
 
+    [SerializeField] private GameObject m_hitEffect;
+
     private void Start()
     {
         Destroy(gameObject, m_lifeTime);
@@ -24,6 +26,8 @@ public class Projectile : MonoBehaviour
                 healthComponent.TakeDamage(FireRequest.Damage);
             }
         }
+
+        Instantiate(m_hitEffect, transform.position, Quaternion.identity);
 
         m_pierceCounter++;
         if (m_pierceCounter > FireRequest.PierceTimes)

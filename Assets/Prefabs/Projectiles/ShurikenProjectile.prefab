@@ -75,6 +75,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ShurikenProjectile
       objectReference: {fileID: 0}
+    - target: {fileID: 8114851285233331668, guid: 007c68bc6b85f9b428e070765824b1c1, type: 3}
+      propertyPath: m_hitEffect
+      value: 
+      objectReference: {fileID: 2274495691977629346, guid: f9d059ccf811b724d9268282089f5ff8, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 007c68bc6b85f9b428e070765824b1c1, type: 3}
 --- !u!1 &8401180528272792437 stripped

@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8389283395ccfba4a811470329fd4526, type: 3}
+  m_Name: Shuriken_Weapon
+  m_EditorClassIdentifier: 
+  DisplayName: Shuriken Thrower
+  DisplayDescription: Fires shurikens, targets nearest enemy
+  Icon: {fileID: 2800000, guid: 13e0fc7ca8e17e949a2f4a73fc04f11d, type: 3}
+  FireChain:
+    OriginalFireRequest:
+      ProjectilePrefab: {fileID: 6173724201993001189, guid: 655d84c8c4f544a4897595656ef74fb3, type: 3}
+      SpawnPosition: {x: 0, y: 0, z: 0}
+      Damage: 0.5
+      Cooldown: 1
+      Size: 1
+      Speed: 1
+      PierceTimes: 0
+      ProjectilesOnDestroy: 0
+    CurrentCooldown: 0
+    OriginalCooldown: 1
+    TimeAtLastFire: 0
+    CurrentFireRequest:
+      ProjectilePrefab: {fileID: 0}
+      SpawnPosition: {x: 0, y: 0, z: 0}
+      Damage: 0
+      Cooldown: 0
+      Size: 0
+      Speed: 0
+      PierceTimes: 0
+      ProjectilesOnDestroy: 0
+  TargetMethodName: ClosestEnemy

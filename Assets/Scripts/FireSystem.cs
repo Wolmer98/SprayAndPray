@@ -13,7 +13,7 @@ public class FireSystem : MonoBehaviour
         public Vector3 SpawnPosition;
 
         public float Damage;
-        public float Cooldown; // This wil be transfered back to the fireChain after being modified by the FireModifiers.
+        [HideInInspector] public float Cooldown; // This wil be transfered back to the fireChain after being modified by the FireModifiers.
         public float Size;
         public float Speed;
         public int PierceTimes;
@@ -134,7 +134,7 @@ public class FireModifiers
             return fireRequest;
 
         var playerPosition = GameManager.Instance.Player.transform.position;
-        var targetPosition = fireRequest.GetTargetPosition(playerPosition);
+        var targetPosition = TargetMethods.ClosestEnemy(playerPosition);
         fireRequest.Cooldown *= Mathf.Lerp(0.4f, 1.0f, Vector3.Distance(playerPosition, targetPosition) / 7.0f);
         return fireRequest;
     }
@@ -182,5 +182,32 @@ public class TargetMethods
         }
 
         return closestEnemy;
+    }
+
+    public static Vector3 PeriodicCircle(Vector3 point)
+    {
+        const float radius = 20.0f;
+
+        var dir = Vector3.right;
+        float degrees = (Time.time * 0.2f % 1.0f) * -360.0f;
+        dir = Quaternion.Euler(0.0f, 0.0f, degrees) * dir;
+
+        return point + (dir * radius);
+    }
+
+    public static Vector3 RandomCardinalDirection(Vector3 point)
+    {
+        const float radius = 20.0f;
+
+        var dir = Vector3.zero;
+        int rng = UnityEngine.Random.Range(0, 4);
+        switch (rng)
+        {
+            case 0: dir = new Vector3(1.0f, 0.0f); break;
+            case 1: dir = new Vector3(0.0f, 1.0f); break;
+            case 2: dir = new Vector3(-1.0f, 0.0f); break;
+            case 3: dir = new Vector3(0.0f, -1.0f); break;
+        }
+        return point + (dir * radius);
     }
 }
