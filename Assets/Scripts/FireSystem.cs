@@ -116,8 +116,8 @@ public class FireModifiers
 
     public static FireSystem.FireRequest HeavyProjectile(FireSystem.FireRequest fireRequest)
     {
-        fireRequest.Speed *= 0.7f;
-        fireRequest.Damage *= 1.3f;
+        fireRequest.Speed *= 0.6f;
+        fireRequest.Damage *= 2.0f;
         return fireRequest;
     }
 

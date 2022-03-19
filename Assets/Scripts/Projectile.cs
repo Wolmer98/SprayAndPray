@@ -10,9 +10,13 @@ public class Projectile : MonoBehaviour
     private int m_pierceCounter = 0;
 
     [SerializeField] private GameObject m_hitEffect;
+    [SerializeField] private AudioClip m_hitAudioClip;
+
+    private AudioSource m_audioSource;
 
     private void Start()
     {
+        m_audioSource = GetComponent<AudioSource>();
         Destroy(gameObject, m_lifeTime);
     }
 
@@ -27,7 +31,11 @@ public class Projectile : MonoBehaviour
             }
         }
 
-        Instantiate(m_hitEffect, transform.position, Quaternion.identity);
+        if (m_hitEffect != null)
+            Instantiate(m_hitEffect, transform.position, Quaternion.identity);
+
+        if (m_audioSource != null && m_hitAudioClip != null)
+            m_audioSource.PlayOneShot(m_hitAudioClip);
 
         m_pierceCounter++;
         if (m_pierceCounter > FireRequest.PierceTimes)
@@ -43,7 +51,7 @@ public class Projectile : MonoBehaviour
             newProjectile.FireRequest.ProjectilesOnDestroy = 0;// Prevent infinite spawning.
             newProjectile.m_pierceCounter = 0;
         }
-     
+
         Destroy(gameObject, 0.05f); // Small delay to ensure ondestroy projectiles are spawned first.
     }
 }

@@ -27,6 +27,15 @@ public class ItemCell : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
         return false;
     }
 
+    private bool DoesFireChainContainItem()
+    {
+        if (!IsHoveringFireChainSlot)
+            return false;
+
+        var fireChain = Inventory.Instance.m_fireChains[FireChainElement.LastHoveredFireChainIndex];
+        return fireChain.Contains(Item);
+    }
+
     public void OnDrag(PointerEventData eventData)
     {
         transform.position = eventData.position;
@@ -51,7 +60,7 @@ public class ItemCell : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        if (IsHoveringFireChainSlot && DoesItemMatchSlotType())
+        if (IsHoveringFireChainSlot && DoesItemMatchSlotType() && !DoesFireChainContainItem())
         {
             Inventory.Instance.m_fireChains[FireChainElement.LastHoveredFireChainIndex][FireChainSlot.LastHoveredSlotIndex] = Item;
             Inventory.Instance.BuildFireChainUI();

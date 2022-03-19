@@ -23,7 +23,7 @@ public class EnemyManager : MonoBehaviour
 
     [SerializeField] private Bounds m_spawnBounds;
     [SerializeField] private float m_spawnDistance;
-    [SerializeField] private float m_maxTimeDifficultyScaling;
+    [SerializeField] public float m_maxTimeDifficultyScaling;
     [SerializeField] AnimationCurve m_waveAmount;
 
     [SerializeField] AnimationCurve m_healthAmount;

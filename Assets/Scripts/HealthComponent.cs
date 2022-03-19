@@ -7,8 +7,14 @@ public class HealthComponent : MonoBehaviour
 {
     [SerializeField] private float m_maxHealth;
     [SerializeField] private XPDrop m_xpDropPrefab;
+    [SerializeField] private float m_invincibilityTime;
+    float m_lastTimeHit;
+
+    [SerializeField] private GameObject m_damagedEffect;
+    [SerializeField] private AudioClip m_damagedAudioClip;
 
     private float m_currentHealth;
+    private AudioSource m_audioSource;
 
     public UnityEvent OnTakeDamage;
     public UnityEvent OnDie;
@@ -16,6 +22,8 @@ public class HealthComponent : MonoBehaviour
     void Start()
     {
         m_currentHealth = m_maxHealth;
+
+        m_audioSource = GetComponent<AudioSource>();
     }
 
     public void TakeDamage(float damage)
@@ -23,8 +31,17 @@ public class HealthComponent : MonoBehaviour
         if (m_currentHealth <= 0)
             return;
 
+        if (m_lastTimeHit + m_invincibilityTime > Time.timeSinceLevelLoad)
+            return;
+        m_lastTimeHit = Time.timeSinceLevelLoad;
+
         m_currentHealth -= damage;
         OnTakeDamage.Invoke();
+
+        if (m_damagedEffect != null)
+            Instantiate(m_damagedEffect, transform.position, Quaternion.identity);
+        if (m_damagedAudioClip != null && m_audioSource != null)
+            m_audioSource.PlayOneShot(m_damagedAudioClip);
 
         // Temp.
         //FloatingTextManager.Instance.SpawnFloatingText(damage.ToString(), transform.position);
@@ -46,7 +63,7 @@ public class HealthComponent : MonoBehaviour
     private bool ShouldDropXP()
     {
         float rng = Random.Range(0.0f, 1.0f);
-        var chance = Mathf.Lerp(0.0f, 1.0f, Time.timeSinceLevelLoad / 300.0f);
+        var chance = Mathf.Lerp(0.0f, 1.0f, Time.timeSinceLevelLoad / EnemyManager.Instance.m_maxTimeDifficultyScaling);
         return rng > chance;
     }
 

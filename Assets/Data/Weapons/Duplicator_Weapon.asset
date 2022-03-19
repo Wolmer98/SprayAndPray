@@ -26,7 +26,7 @@ MonoBehaviour:
       PierceTimes: 0
       ProjectilesOnDestroy: 1
     CurrentCooldown: 0
-    OriginalCooldown: 0.2
+    OriginalCooldown: 0.5
     TimeAtLastFire: 0
     CurrentFireRequest:
       ProjectilePrefab: {fileID: 0}
