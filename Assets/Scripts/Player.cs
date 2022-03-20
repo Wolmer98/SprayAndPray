@@ -18,9 +18,6 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
-        var healthComponent = GetComponent<HealthComponent>();
-        healthComponent.OnDie.AddListener(() => UnityEngine.SceneManagement.SceneManager.LoadScene(0));
-
         m_audioSource = GetComponent<AudioSource>();
     }
 
@@ -44,6 +41,9 @@ public class Player : MonoBehaviour
     private void LevelUp()
     {
         float rng = Random.Range(0.0f, 1.0f);
+        m_level++;
+        if (m_level < 3)
+            rng = 2.0f; // Remove chance for slots the first levels.
 
         if (rng <= m_fireChainSlotChance && !GameManager.Instance.Inventory.MaximumFireslotsReached())
         {
@@ -81,6 +81,19 @@ public class Player : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.L))
             LevelUp();
+
+        if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.L))
+        {
+            for (int i = 0; i < 50; i++)
+            {
+                LevelUp();
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.T))
+            Time.timeScale = 10.0f;
+        if (Input.GetKeyUp(KeyCode.T))
+            Time.timeScale = 1.0f;
     }
 
     private void OnCollisionEnter2D(Collision2D other)

@@ -43,8 +43,8 @@ public class HealthComponent : MonoBehaviour
         if (m_damagedAudioClip != null && m_audioSource != null)
             m_audioSource.PlayOneShot(m_damagedAudioClip);
 
-        // Temp.
-        //FloatingTextManager.Instance.SpawnFloatingText(damage.ToString(), transform.position);
+        var message = Mathf.CeilToInt(damage).ToString();
+        FloatingTextManager.Instance.SpawnFloatingText(message, transform.position, null);
 
         if (m_currentHealth <= 0)
             Die();

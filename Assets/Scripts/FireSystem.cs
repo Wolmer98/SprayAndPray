@@ -18,6 +18,9 @@ public class FireSystem : MonoBehaviour
         public float Speed;
         public int PierceTimes;
         public int ProjectilesOnDestroy;
+        public float Lifetime;
+
+        public List<Component> OnHitStatusEffects;
 
         public Func<Vector3, Vector3> GetTargetPosition;
     }
@@ -53,6 +56,7 @@ public class FireSystem : MonoBehaviour
         {
             fireChain.CurrentFireRequest = fireChain.OriginalFireRequest;
             fireChain.CurrentFireRequest.Cooldown = fireChain.OriginalCooldown;
+            fireChain.CurrentFireRequest.OnHitStatusEffects = new List<Component>();
 
             // Alter the request through the fire modifiers.
             foreach (var fireModifier in fireChain.FireModifiers)
@@ -77,10 +81,7 @@ public class FireSystem : MonoBehaviour
 
         // Get position and rotation.
         fireRequest.SpawnPosition = transform.position;
-        var targetPosition = fireRequest.GetTargetPosition(fireRequest.SpawnPosition);
-        var spawnDirection = (targetPosition - fireRequest.SpawnPosition).normalized;
-        float zRot = Mathf.Atan2(spawnDirection.y, spawnDirection.x) * Mathf.Rad2Deg;
-        var spawnRotation = Quaternion.Euler(0.0f, 0.0f, zRot - 90);
+        var spawnRotation = GetProjectileSpawnRotation(fireRequest, transform.position);
 
         // Instantiate and set stats.
         var projectile = Instantiate(fireRequest.ProjectilePrefab, fireRequest.SpawnPosition, spawnRotation);
@@ -90,7 +91,17 @@ public class FireSystem : MonoBehaviour
 
         var projectileMovement = projectile.GetComponent<ProjectileMovement>();
         projectileMovement.MovementSpeed *= fireRequest.Speed;
+    }
 
+    public static Quaternion GetProjectileSpawnRotation(FireRequest fireRequest, Vector3 point)
+    {
+        fireRequest.SpawnPosition = point;
+        var targetPosition = fireRequest.GetTargetPosition(fireRequest.SpawnPosition);
+        var spawnDirection = (targetPosition - fireRequest.SpawnPosition).normalized;
+        float zRot = Mathf.Atan2(spawnDirection.y, spawnDirection.x) * Mathf.Rad2Deg;
+        var spawnRotation = Quaternion.Euler(0.0f, 0.0f, zRot - 90);
+
+        return spawnRotation;
     }
 }
 
@@ -110,7 +121,7 @@ public class FireModifiers
 
     public static FireSystem.FireRequest CooldownReduction(FireSystem.FireRequest fireRequest)
     {
-        fireRequest.Cooldown *= 0.75f;
+        fireRequest.Cooldown *= 0.5f;
         return fireRequest;
     }
 
@@ -154,6 +165,30 @@ public class FireModifiers
     public static FireSystem.FireRequest ProjectilesOnDestroy(FireSystem.FireRequest fireRequest)
     {
         fireRequest.ProjectilesOnDestroy++;
+        return fireRequest;
+    }
+
+    public static FireSystem.FireRequest LifetimeIncrease(FireSystem.FireRequest fireRequest)
+    {
+        fireRequest.Lifetime *= 1.5f;
+        return fireRequest;
+    }
+
+    public static FireSystem.FireRequest DamagePerLifetime(FireSystem.FireRequest fireRequest)
+    {
+        fireRequest.Lifetime *= Mathf.Lerp(1.0f, 5.0f, (fireRequest.Lifetime - 2.0f) / 6.0f);
+        return fireRequest;
+    }
+
+    public static FireSystem.FireRequest FrostStatusEffect(FireSystem.FireRequest fireRequest)
+    {
+        fireRequest.OnHitStatusEffects.Add(new FrostStatusEffect());
+        return fireRequest;
+    }
+
+    public static FireSystem.FireRequest FireStatusEffect(FireSystem.FireRequest fireRequest)
+    {
+        fireRequest.OnHitStatusEffects.Add(new FireStatusEffect());
         return fireRequest;
     }
 }

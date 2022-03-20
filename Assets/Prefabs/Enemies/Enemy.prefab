@@ -54,7 +54,7 @@ MonoBehaviour:
   m_xpDropPrefab: {fileID: 3456722303932941553, guid: f9b82aa8f0583af4493b9e4fa82ef9ee, type: 3}
   m_invincibilityTime: 0
   m_damagedEffect: {fileID: 0}
-  m_damagedAudioClip: {fileID: 8300000, guid: 1ad6567147614474e9f54a634a73858f, type: 3}
+  m_damagedAudioClip: {fileID: 0}
   OnTakeDamage:
     m_PersistentCalls:
       m_Calls: []
@@ -73,7 +73,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfdda7f8830722d4d808b5f451463164, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_movementSpeed: 2
+  m_movementSpeed: 1.75
 --- !u!114 &6320013417733791454
 MonoBehaviour:
   m_ObjectHideFlags: 0

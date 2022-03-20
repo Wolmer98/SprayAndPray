@@ -134,6 +134,11 @@ public class Inventory : MonoBehaviour
                     var itemCell = Instantiate(m_itemCellPrefab, fireChainSlot.transform);
                     itemCell.Setup(fireChain[i]);
                 }
+
+                if (i == m_fireChainLength - 1 || i == fireChain.Count - 1)
+                {
+                    Destroy(fireChainSlot.transform.Find("Arrow").gameObject);
+                }
             }
 
             fireChainIndex++;

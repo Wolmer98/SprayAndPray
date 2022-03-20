@@ -57,7 +57,7 @@ MonoBehaviour:
     Speed: 0
     PierceTimes: 0
     ProjectilesOnDestroy: 0
-  m_lifeTime: 3
+  m_lifeTime: 2
   m_hitEffect: {fileID: 0}
   m_hitAudioClip: {fileID: 8300000, guid: 56618c148a099db4990bc389a0eca259, type: 3}
 --- !u!114 &4759442753049862344

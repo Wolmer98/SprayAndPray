@@ -6,7 +6,6 @@ public class Projectile : MonoBehaviour
 {
     public FireSystem.FireRequest FireRequest;
 
-    [SerializeField] private float m_lifeTime = 3.0f;
     private int m_pierceCounter = 0;
 
     [SerializeField] private GameObject m_hitEffect;
@@ -17,7 +16,7 @@ public class Projectile : MonoBehaviour
     private void Start()
     {
         m_audioSource = GetComponent<AudioSource>();
-        Destroy(gameObject, m_lifeTime);
+        Destroy(gameObject, FireRequest.Lifetime);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -28,6 +27,13 @@ public class Projectile : MonoBehaviour
             if (healthComponent)
             {
                 healthComponent.TakeDamage(FireRequest.Damage);
+            }
+
+            foreach (var statusEffect in FireRequest.OnHitStatusEffects)
+            {
+                var type = statusEffect.GetType();
+                if (!other.gameObject.GetComponent(type))
+                    other.gameObject.AddComponent(type);
             }
         }
 
@@ -46,7 +52,8 @@ public class Projectile : MonoBehaviour
     {
         for (int i = 0; i < FireRequest.ProjectilesOnDestroy; i++)
         {
-            var newProjectile = Instantiate(gameObject, transform.position, Quaternion.Euler(0, 0, Random.Range(0, 360))).GetComponent<Projectile>();
+            var spawnRotation = FireSystem.GetProjectileSpawnRotation(FireRequest, transform.position);
+            var newProjectile = Instantiate(gameObject, transform.position, spawnRotation).GetComponent<Projectile>();
             newProjectile.FireRequest = FireRequest;
             newProjectile.FireRequest.ProjectilesOnDestroy = 0;// Prevent infinite spawning.
             newProjectile.m_pierceCounter = 0;

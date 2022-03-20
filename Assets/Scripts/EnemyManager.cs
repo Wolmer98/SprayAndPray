@@ -30,6 +30,8 @@ public class EnemyManager : MonoBehaviour
 
     [SerializeField] GameObject[] m_enemyPrefabs;
 
+    private float m_difficultyTimeScale = 1.0f; // Used for cheats/skipping time
+
     void Update()
     {
         if (m_spawnTimer >= m_spawnCooldown)
@@ -51,6 +53,15 @@ public class EnemyManager : MonoBehaviour
         {
             m_spawnWaveTimer += Time.deltaTime;
         }
+
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            m_difficultyTimeScale = Mathf.Infinity;
+            if (GameManager.Instance.Player == null)
+                return;
+            var playerTransform = GameManager.Instance.Player.transform;
+            FloatingTextManager.Instance.SpawnFloatingText("DIFFICULTY MAXED", playerTransform.position, playerTransform);
+        }
     }
 
     private async void SpawnEnemyWave()
@@ -62,6 +73,9 @@ public class EnemyManager : MonoBehaviour
 
         for (int i = 0; i < spawnAmount; i++)
         {
+            if (GameManager.Instance.Player == null)
+                return;
+
             var randomOffset = (Random.insideUnitCircle.normalized * 10.0f) + waveOffset;
             var spawnPosition = GameManager.Instance.Player.transform.position.AddVec2(randomOffset);
 
@@ -73,7 +87,7 @@ public class EnemyManager : MonoBehaviour
 
     private float GetDifficultyT()
     {
-        return Mathf.Clamp01(Time.timeSinceLevelLoad / m_maxTimeDifficultyScaling);
+        return Mathf.Clamp01((Time.timeSinceLevelLoad * m_difficultyTimeScale) / m_maxTimeDifficultyScaling);
     }
 
     private GameObject GetRandomEnemyPrefab()
