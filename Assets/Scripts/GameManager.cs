@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class GameManager : MonoBehaviour
 {
@@ -22,6 +24,9 @@ public class GameManager : MonoBehaviour
     public GameObject DeathScreen;
 
     [SerializeField] TMPro.TMP_Text m_timerText;
+
+    [SerializeField] private AudioMixerGroup m_sfxGroup;
+    private Dictionary<string, float> m_sfxPlayTimes = new Dictionary<string, float>();
 
     private void Start()
     {
@@ -66,5 +71,32 @@ public class GameManager : MonoBehaviour
     {
         UnpauseGame();
         UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+    }
+
+    public void PlaySFX(AudioClip audioClip)
+    {
+        if (audioClip == null)
+            return;
+
+        float minAudioClipCooldown = UnityEngine.Random.Range(0.05f, 0.2f);
+
+        if (m_sfxPlayTimes.ContainsKey(audioClip.name))
+        {
+            if (Time.timeSinceLevelLoad < m_sfxPlayTimes[audioClip.name] + minAudioClipCooldown)
+                return;
+            
+            m_sfxPlayTimes[audioClip.name] = Time.timeSinceLevelLoad;
+        }
+        else
+        {
+            m_sfxPlayTimes.Add(audioClip.name, Time.timeSinceLevelLoad);
+        }
+
+        var audioSourceGo = new GameObject();
+        var audioSource = audioSourceGo.AddComponent<AudioSource>();
+        audioSource.outputAudioMixerGroup = m_sfxGroup;
+        audioSource.PlayOneShot(audioClip);
+
+        Destroy(audioSourceGo, audioClip.length + 0.1f);
     }
 }

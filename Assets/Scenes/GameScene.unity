@@ -529,6 +529,7 @@ MonoBehaviour:
   HoverPopup: {fileID: 430453667}
   DeathScreen: {fileID: 840219221}
   m_timerText: {fileID: 1185811769}
+  m_sfxGroup: {fileID: 8469365034405593920, guid: 08ad077a117130641b090e7c28d1f5bb, type: 2}
 --- !u!4 &320776382
 Transform:
   m_ObjectHideFlags: 0

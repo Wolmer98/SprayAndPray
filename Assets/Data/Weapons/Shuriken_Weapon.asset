@@ -19,13 +19,14 @@ MonoBehaviour:
     OriginalFireRequest:
       ProjectilePrefab: {fileID: 6173724201993001189, guid: 655d84c8c4f544a4897595656ef74fb3, type: 3}
       SpawnPosition: {x: 0, y: 0, z: 0}
-      Damage: 0.5555555
+      Damage: 0.5
       Cooldown: 1
       Size: 1
       Speed: 0.4
       PierceTimes: 0
       ProjectilesOnDestroy: 0
       Lifetime: 2
+      OnHitStatusEffects: []
     CurrentCooldown: 0
     OriginalCooldown: 1
     TimeAtLastFire: 0
@@ -39,4 +40,5 @@ MonoBehaviour:
       PierceTimes: 0
       ProjectilesOnDestroy: 0
       Lifetime: 0
+      OnHitStatusEffects: []
   TargetMethodName: ClosestEnemy

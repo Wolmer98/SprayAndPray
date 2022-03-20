@@ -134,8 +134,8 @@ public class FireModifiers
 
     public static FireSystem.FireRequest LightProjectile(FireSystem.FireRequest fireRequest)
     {
-        fireRequest.Speed *= 1.3f;
-        fireRequest.Damage *= 0.7f;
+        fireRequest.Speed *= 2.0f;
+        fireRequest.Damage *= 0.6f;
         return fireRequest;
     }
 

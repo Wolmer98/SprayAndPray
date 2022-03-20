@@ -22,7 +22,6 @@ public class HealthComponent : MonoBehaviour
     void Start()
     {
         m_currentHealth = m_maxHealth;
-
         m_audioSource = GetComponent<AudioSource>();
     }
 
@@ -41,7 +40,7 @@ public class HealthComponent : MonoBehaviour
         if (m_damagedEffect != null)
             Instantiate(m_damagedEffect, transform.position, Quaternion.identity);
         if (m_damagedAudioClip != null && m_audioSource != null)
-            m_audioSource.PlayOneShot(m_damagedAudioClip);
+            GameManager.Instance.PlaySFX(m_damagedAudioClip);
 
         var message = Mathf.CeilToInt(damage).ToString();
         FloatingTextManager.Instance.SpawnFloatingText(message, transform.position, null);

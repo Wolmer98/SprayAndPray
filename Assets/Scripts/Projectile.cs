@@ -41,7 +41,7 @@ public class Projectile : MonoBehaviour
             Instantiate(m_hitEffect, transform.position, Quaternion.identity);
 
         if (m_audioSource != null && m_hitAudioClip != null)
-            m_audioSource.PlayOneShot(m_hitAudioClip);
+            GameManager.Instance.PlaySFX(m_hitAudioClip);
 
         m_pierceCounter++;
         if (m_pierceCounter > FireRequest.PierceTimes)
